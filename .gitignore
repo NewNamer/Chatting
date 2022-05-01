@@ -1,41 +1,197 @@
-# Compiled Lua sources
-luac.out
+if game.CoreGui:FindFirstChild("ChatHack") then
+	game.CoreGui:FindFirstChild("ChatHack"):remove()
+end
+local partsWithId = {}
+local awaitRef = {}
 
-# luarocks build files
-*.src.rock
-*.zip
-*.tar.gz
+local root = {
+	ID = 0;
+	Type = "ScreenGui";
+	Properties = {
+		Name = "ChatHack";
+		ZIndexBehavior = Enum.ZIndexBehavior.Sibling;
+	};
+	Children = {
+		{
+			ID = 1;
+			Type = "Frame";
+			Properties = {
+				Position = UDim2.new(0.75,0,0.18799999356269836,0);
+				Size = UDim2.new(0.25,0,0.30000001192092896,0);
+				BackgroundTransparency = 1;
+				BackgroundColor3 = Color3.new(1,1,1);
+			};
+			Children = {
+				{
+					ID = 2;
+					Type = "UIGridLayout";
+					Properties = {
+						CellSize = UDim2.new(1,0,0.15000000596046448,0);
+						SortOrder = Enum.SortOrder.LayoutOrder;
+					};
+					Children = {};
+				};
+				{
+					ID = 3;
+					Type = "TextLabel";
+					Properties = {
+						FontSize = Enum.FontSize.Size14;
+						TextColor3 = Color3.new(0,0,0);
+						TextWrapped = true;
+						Font = Enum.Font.ArialBold;
+						Name = "TextLabel1";
+						Position = UDim2.new(0.7599999904632568,0,0.23000000417232513,0);
+						Size = UDim2.new(0.23999999463558197,0,0.03999999910593033,0);
+						BackgroundColor3 = Color3.new(1,1,1);
+						TextSize = 14;
+						TextWrap = true;
+					};
+					Children = {};
+				};
+				{
+					ID = 4;
+					Type = "TextLabel";
+					Properties = {
+						FontSize = Enum.FontSize.Size14;
+						TextColor3 = Color3.new(0,0,0);
+						TextWrapped = true;
+						Font = Enum.Font.ArialBold;
+						Name = "TextLabel2";
+						Position = UDim2.new(0.7599999904632568,0,0.2800000011920929,0);
+						Size = UDim2.new(0.23999999463558197,0,0.03999999910593033,0);
+						BackgroundColor3 = Color3.new(1,1,1);
+						TextSize = 14;
+						TextWrap = true;
+					};
+					Children = {};
+				};
+				{
+					ID = 5;
+					Type = "TextLabel";
+					Properties = {
+						FontSize = Enum.FontSize.Size14;
+						TextColor3 = Color3.new(0,0,0);
+						TextWrapped = true;
+						Font = Enum.Font.ArialBold;
+						Name = "TextLabel3";
+						Position = UDim2.new(0.7599999904632568,0,0.33000001311302185,0);
+						Size = UDim2.new(0.23999999463558197,0,0.03999999910593033,0);
+						BackgroundColor3 = Color3.new(1,1,1);
+						TextSize = 14;
+						TextWrap = true;
+					};
+					Children = {};
+				};
+				{
+					ID = 6;
+					Type = "TextLabel";
+					Properties = {
+						FontSize = Enum.FontSize.Size14;
+						TextColor3 = Color3.new(0,0,0);
+						TextWrapped = true;
+						Font = Enum.Font.ArialBold;
+						Name = "TextLabel4";
+						Position = UDim2.new(0.7599999904632568,0,0.3799999952316284,0);
+						Size = UDim2.new(0.23999999463558197,0,0.03999999910593033,0);
+						BackgroundColor3 = Color3.new(1,1,1);
+						TextSize = 14;
+						TextWrap = true;
+					};
+					Children = {};
+				};
+				{
+					ID = 7;
+					Type = "TextLabel";
+					Properties = {
+						FontSize = Enum.FontSize.Size14;
+						TextColor3 = Color3.new(0,0,0);
+						TextWrapped = true;
+						Font = Enum.Font.ArialBold;
+						Name = "TextLabel5";
+						Position = UDim2.new(0.7599999904632568,0,0.4300000071525574,0);
+						Size = UDim2.new(0.23999999463558197,0,0.03999999910593033,0);
+						BackgroundColor3 = Color3.new(1,1,1);
+						TextSize = 14;
+						TextWrap = true;
+					};
+					Children = {};
+				};
+				{
+					ID = 8;
+					Type = "TextLabel";
+					Properties = {
+						FontSize = Enum.FontSize.Size14;
+						TextColor3 = Color3.new(0,0,0);
+						TextWrapped = true;
+						Font = Enum.Font.ArialBold;
+						Name = "TextLabel6";
+						Position = UDim2.new(0.7599999904632568,0,0.4300000071525574,0);
+						Size = UDim2.new(0.23999999463558197,0,0.03999999910593033,0);
+						BackgroundColor3 = Color3.new(1,1,1);
+						TextSize = 14;
+						TextWrap = true;
+					};
+					Children = {};
+				};
+			};
+		};
+	};
+};
 
-# Object files
-*.o
-*.os
-*.ko
-*.obj
-*.elf
+local function Scan(item, parent)
+	local obj = Instance.new(item.Type)
+	if (item.ID) then
+		local awaiting = awaitRef[item.ID]
+		if (awaiting) then
+			awaiting[1][awaiting[2]] = obj
+			awaitRef[item.ID] = nil
+		else
+			partsWithId[item.ID] = obj
+		end
+	end
+	for p,v in pairs(item.Properties) do
+		if (type(v) == "string") then
+			local id = tonumber(v:match("^_R:(%w+)_$"))
+			if (id) then
+				if (partsWithId[id]) then
+					v = partsWithId[id]
+				else
+					awaitRef[id] = {obj, p}
+					v = nil
+				end
+			end
+		end
+		obj[p] = v
+	end
+	for _,c in pairs(item.Children) do
+		Scan(c, obj)
+	end
+	obj.Parent = parent
+	return obj
+end
 
-# Precompiled Headers
-*.gch
-*.pch
+Scan(root, game.CoreGui)
+local Players = game:GetService("Players")
+function OnPlayerAdded(Player1)
+	Player1.Chatted:Connect(function(msg)
+		local TextLabel1 = script.Parent.ChatHack.Frame.TextLabel1
+		local TextLabel2 = script.Parent.ChatHack.Frame.TextLabel2
+		local TextLabel3 = script.Parent.ChatHack.Frame.TextLabel3
+		local TextLabel4 = script.Parent.ChatHack.Frame.TextLabel4
+		local TextLabel5 = script.Parent.ChatHack.Frame.TextLabel5
+		local TextLabel6 = script.Parent.ChatHack.Frame.TextLabel6
 
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
-*.def
-*.exp
+		TextLabel1.Text = TextLabel2.Text
+		TextLabel2.Text = TextLabel3.Text
+		TextLabel3.Text = TextLabel4.Text
+		TextLabel4.Text = TextLabel5.Text
+		TextLabel5.Text = TextLabel6.Text
+		TextLabel6.Text = "["..Player1.Name.."]:"..msg
+	end)
+end
 
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
+for _,Player in pairs(Players:GetPlayers()) do 
+	OnPlayerAdded(Player)
+end
 
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
-
+Players.PlayerAdded:Connect(OnPlayerAdded)
