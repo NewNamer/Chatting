@@ -174,12 +174,13 @@ Scan(root, game.CoreGui)
 local Players = game:GetService("Players")
 function OnPlayerAdded(Player1)
 	Player1.Chatted:Connect(function(msg)
-		local TextLabel1 = script.Parent.ChatHack.Frame.TextLabel1
-		local TextLabel2 = script.Parent.ChatHack.Frame.TextLabel2
-		local TextLabel3 = script.Parent.ChatHack.Frame.TextLabel3
-		local TextLabel4 = script.Parent.ChatHack.Frame.TextLabel4
-		local TextLabel5 = script.Parent.ChatHack.Frame.TextLabel5
-		local TextLabel6 = script.Parent.ChatHack.Frame.TextLabel6
+		local CoreGui = game.CoreGui
+		local TextLabel1 = CoreGui.ChatHack.Frame.TextLabel1
+		local TextLabel2 = CoreGui.ChatHack.Frame.TextLabel2
+		local TextLabel3 = CoreGui.ChatHack.Frame.TextLabel3
+		local TextLabel4 = CoreGui.ChatHack.Frame.TextLabel4
+		local TextLabel5 = CoreGui.ChatHack.Frame.TextLabel5
+		local TextLabel6 = CoreGui.ChatHack.Frame.TextLabel6
 
 		TextLabel1.Text = TextLabel2.Text
 		TextLabel2.Text = TextLabel3.Text
