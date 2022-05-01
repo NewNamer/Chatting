@@ -170,17 +170,16 @@ local function Scan(item, parent)
 	return obj
 end
 
-Scan(root, game.CoreGui)
+local obbb = Scan(root, game.CoreGui)
 local Players = game:GetService("Players")
 function OnPlayerAdded(Player1)
 	Player1.Chatted:Connect(function(msg)
-		local CoreGui = game.CoreGui
-		local TextLabel1 = CoreGui.ChatHack.Frame.TextLabel1
-		local TextLabel2 = CoreGui.ChatHack.Frame.TextLabel2
-		local TextLabel3 = CoreGui.ChatHack.Frame.TextLabel3
-		local TextLabel4 = CoreGui.ChatHack.Frame.TextLabel4
-		local TextLabel5 = CoreGui.ChatHack.Frame.TextLabel5
-		local TextLabel6 = CoreGui.ChatHack.Frame.TextLabel6
+		local TextLabel1 = obbb.Frame.TextLabel1
+		local TextLabel2 = obbb.Frame.TextLabel2
+		local TextLabel3 = obbb.Frame.TextLabel3
+		local TextLabel4 = obbb.Frame.TextLabel4
+		local TextLabel5 = obbb.Frame.TextLabel5
+		local TextLabel6 = obbb.Frame.TextLabel6
 
 		TextLabel1.Text = TextLabel2.Text
 		TextLabel2.Text = TextLabel3.Text
