@@ -189,6 +189,21 @@ function OnPlayerAdded(Player1)
 		TextLabel6.Text = "["..Player1.Name.."]:"..msg
 	end)
 end
+game.ReplicatedStorage.PlayerJoinedEvent.OnClientEvent:Connect(function(p1)
+    local TextLabel1 = obbb.Frame.TextLabel1
+		local TextLabel2 = obbb.Frame.TextLabel2
+		local TextLabel3 = obbb.Frame.TextLabel3
+		local TextLabel4 = obbb.Frame.TextLabel4
+		local TextLabel5 = obbb.Frame.TextLabel5
+		local TextLabel6 = obbb.Frame.TextLabel6
+
+		TextLabel1.Text = TextLabel2.Text
+		TextLabel2.Text = TextLabel3.Text
+		TextLabel3.Text = TextLabel4.Text
+		TextLabel4.Text = TextLabel5.Text
+		TextLabel5.Text = TextLabel6.Text
+		TextLabel6.Text = "["..p1.."]: Зашёл в игру"
+end)
 
 for _,Player in pairs(Players:GetPlayers()) do 
 	OnPlayerAdded(Player)
